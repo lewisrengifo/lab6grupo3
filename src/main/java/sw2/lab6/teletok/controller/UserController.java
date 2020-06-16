@@ -11,17 +11,24 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import sw2.lab6.teletok.entity.Post;
 import sw2.lab6.teletok.entity.User;
+import sw2.lab6.teletok.repository.PostRepository;
 import sw2.lab6.teletok.repository.UserRepository;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class UserController {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    PostRepository postRepository;
 
     @GetMapping("/user/signIn")
     public String signIn(){
