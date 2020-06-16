@@ -52,9 +52,6 @@ public class PostController {
     PostCommentRepository postCommentRepository;
 
 
-    @Autowired
-    PostRepository postRepository;
-
     @GetMapping(value = {"", "/"})
     public String listPost(Model model){
 
