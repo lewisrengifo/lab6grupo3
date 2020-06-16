@@ -1,5 +1,6 @@
 package sw2.lab6.teletok.controller;
 
+
 import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,12 +19,34 @@ import javax.validation.Valid;
 import java.util.Date;
 import java.util.HashMap;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+import sw2.lab6.teletok.entity.Post;
+import sw2.lab6.teletok.entity.PostComment;
+import sw2.lab6.teletok.repository.PostCommentRepository;
+import sw2.lab6.teletok.repository.PostLikeRepository;
+import sw2.lab6.teletok.repository.PostRepository;
+import sw2.lab6.teletok.repository.UserRepository;
+
+
 @Controller
 public class PostController {
     @Autowired
+
     private StorageService storageService;
     @Autowired
     PostRepository postRepository;
+
+
+    @Autowired
+    UserRepository userRepository;
+    @Autowired
+    PostLikeRepository postLikeRepository;
+    @Autowired
+    PostCommentRepository postCommentRepository;
+
 
     @GetMapping(value = {"", "/"})
     public String listPost(Model model){
@@ -71,13 +94,21 @@ public class PostController {
     }
 
     @GetMapping("/post/{id}")
-    public String viewPost() {
+    public String viewPost(Model model, @ModelAttribute Post post, @PathVariable("id") int post_id) {
+
+        model.addAttribute("Descripcion",postRepository.findDescripcionbyId(post.getId()));
+        model.addAttribute("likes", postLikeRepository.cantidaddelikes(post.getId()));
+        model.addAttribute("usuario", userRepository.findAutorPost(post.getId()));
+        model.addAttribute("post", postRepository.findById(post_id));
+        model.addAttribute("listacomments", postCommentRepository.comendsbyid(post.getId()));
         return "post/view";
     }
 
     @PostMapping("/post/comment")
-    public String postComment() {
-        return "";
+    public String postComment(@ModelAttribute("PostComment") PostComment postComment, Model model) {
+
+        postCommentRepository.save(postComment);
+        return "redirect:/post/{id}";
     }
 
     @PostMapping("/post/like")
