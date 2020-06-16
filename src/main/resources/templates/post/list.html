@@ -7,9 +7,15 @@
     <div th:if="${msg != null}" th:text="${msg}" class="alert alert-success mt-3" role="alert"></div>
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 card-app">
         <div class="col mb-4">
+<<<<<<< HEAD
             <div class="card" th:each="Post, p : ${listaPost}">
                 <img th:src="@{|fotos/${Post.mediaUrl}|}" class="card-img-top" style="height: 150px;">
                 <a th:href="@{|/post/${Post.id}|}">
+=======
+
+                <!--img th:src="@{/img/huaraz.jpg}" class="card-img-top" style="height: 150px;">
+                <a th:href="@{/post/1}">
+>>>>>>> josuerama
                     <div class="card-img-overlay">
                         <h6 class="card-title text-white text-center mt-5" style="text-shadow: 2px 2px 4px #000000;">
                             <i class="fa fa-heart"></i>  2 <i class="fa fa-comment ml-3"></i> 5
@@ -18,8 +24,31 @@
                 </a>
                 <div class="card-body">
                     <p class="card-text card-body-app">#huaraz #peru #trip</p>
+<<<<<<< HEAD
                     <p class="card-text"><small class="text-muted" th:text="|${session.user.fullname} |">@josebarturen - Publicado hace 25 minutos</small></p>
+=======
+                    <p class="card-text"><small class="text-muted">@josebarturen - Publicado hace 25 minutos</small></p>
+                </div-->
+            <div  th:each="post : ${listapost}" class="card">
+                <div >
+                    <img th:src="@{'/post/file/' + ${post.mediaUrl}} " class="card-img-top" style="height: 150px;">
+                    <a th:href="@{'/post/' + ${post.id} }">
+                        <div class="card-img-overlay">
+                            <h6 class="card-title text-white text-center mt-5" style="text-shadow: 2px 2px 4px #000000;">
+                                <i class="fa fa-heart"></i> 2 <i class="fa fa-comment ml-3"></i> 5
+                            </h6>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text card-body-app" th:text="${post.description}">#huaraz #peru #trip</p>
+                            <p th:if="${hoydia.date==post.getCreationDate().date && post.getCreationDate().getSeconds()<60}" class="card-text"><small class="text-muted" th:text="'@'+${post.user.getUsername()} + '- Publicado hace ' + ${post.creationDate.getSeconds()} + 'segundos'">@josebarturen - Publicado hace 25 minutos</small></p>
+                            <p  th:if="${hoydia.date==post.getCreationDate().date && post.getCreationDate().getMinutes()>1}" class="card-text"><small class="text-muted" th:text="'@'+${post.user.getUsername()} + '- Publicado hace ' + ${post.creationDate.getMinutes()} + 'minutos'">@josebarturen - Publicado hace 25 minutos</small></p>
+                            <p th:if="${hoydia.date==post.getCreationDate().date && post.getCreationDate().getHours()>1}" class="card-text"><small class="text-muted" th:text="'@'+ ${post.user.getUsername()} + '- Publicado hace ' + ${post.creationDate.getHours()} + 'horas'">@josebarturen - Publicado hace 25 minutos</small></p>
+
+                        </div>
+                    </a>
+>>>>>>> josuerama
                 </div>
+
             </div>
         </div>
     </div>
